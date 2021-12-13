@@ -1,81 +1,41 @@
-import { Grid, GridItem } from "@chakra-ui/layout";
+import { Grid, GridItem } from '@chakra-ui/layout';
+import { TaskProvider, useTasks } from 'app/contexts/tasks/provider';
 
-import TodoList from "@/components/screens/tasks/toDos/todoList";
-import ActionBar from "@/components/screens/tasks/toDos/actionBar";
-import { TaskProvider, useTasks } from "app/contexts/tasks/provider";
-import { fauna, getAllCategories } from "app/services/fauna";
-import { query as q } from "faunadb";
-import { api } from "app/services/api";
-import useSWR from "swr";
-import axios from "axios";
-import { useCallback, useEffect } from "react";
-import Table from "@/components/templates/Tables/tables";
-import { MODAL_TYPES, useGlobalModal } from "app/contexts/globalModal/provider";
+import ConfigTables from '@/components/templates/ConfigTables';
+
+const table = {
+  title: 'Categories',
+  columns: ['id', 'name'],
+};
+
+const modalConfig = {
+  createTitle: 'Create category',
+  editTitle: 'Edit category',
+  deleteTitle: 'Delete category',
+  inputs: ['name'],
+};
+
+const serviceName = 'categories';
 
 const Categories = (props) => {
-  const { todoList, setTodoList, refreshData } = useTasks();
-  const { handleOpenCreateModal, showModal, setForm } = useGlobalModal();
+  // const loadAllTasks = useCallback(async () => {
+  //   if (!todoList.length) {
+  //     refreshData();
+  //   }
+  // }, []);
 
-  const loadAllTasks = useCallback(async () => {
-    if (!todoList.length) {
-      refreshData();
-    }
-  }, []);
-
-  useEffect(() => {
-    loadAllTasks();
-  }, [loadAllTasks]);
-
-  const createModal = () => {
-    showModal(MODAL_TYPES.CREATE_MODAL, {
-      title: "Create category",
-      inputs: ["name"],
-      confirmBtn: "Save",
-      service: "categories",
-    });
-  };
-
-  const handleEdit = (form) => {
-    setForm(form);
-
-    showModal(MODAL_TYPES.CREATE_MODAL, {
-      title: "Edit category",
-      inputs: ["name"],
-      confirmBtn: "Save",
-      service: "categories",
-    });
-  };
-
-  const handleRemove = (form) => {
-    showModal(MODAL_TYPES.DELETE_MODAL, {
-      title: "Delete",
-      description: "Are you sure you want delete this category?",
-      service: "categories",
-    });
-    setForm(form);
-  };
-
-  const updateModal = () => {
-    // showModal(MODAL_TYPES.UPDATE_MODAL);
-  };
-
-  const handleAdd = () => {
-    // handleOpenCreateModal();
-    createModal();
-  };
+  // useEffect(() => {
+  //   loadAllTasks();
+  // }, [loadAllTasks]);
 
   return (
-    <Grid h={"100%"}>
-      {/* <GridItem rowSpan={1} p={"1px"}></GridItem> */}
+    <Grid h={'100%'}>
       <GridItem rowSpan={1} overflow="auto" bg="white" borderRadius={8} p={14}>
-        {/* <TodoList /> */}
-        <Table
-          title={"Categories"}
-          columns={["id", "name"]}
-          data={todoList}
-          handleAdd={handleAdd}
-          handleEdit={handleEdit}
-          handleRemove={handleRemove}
+        <ConfigTables
+          table={table}
+          modalConfig={modalConfig}
+          serviceName={serviceName}
+          contextRef={useTasks()}
         />
       </GridItem>
     </Grid>
