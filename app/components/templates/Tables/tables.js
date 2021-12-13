@@ -1,4 +1,4 @@
-import { Flex, Spacer, Stack } from "@chakra-ui/layout";
+import { Flex, HStack, Spacer, Stack, VStack } from "@chakra-ui/layout";
 // import { useTasks } from "app/contexts/tasks/provider";
 
 import TodoItem from "@/components/screens/tasks/toDos/todoItem";
@@ -16,13 +16,20 @@ import {
 import { Box, Text } from "@chakra-ui/react";
 import IconButton from "@/components/ui/Buttons";
 
-const Table = ({ title, data, columns, handleAdd }) => {
+const Table = ({
+  title,
+  data,
+  columns,
+  handleAdd,
+  handleEdit,
+  handleRemove,
+}) => {
   return (
     <Stack spacing={6}>
       <Flex>
         <Text fontSize="3xl">{title}</Text>
         <Spacer />
-        <IconButton onClick={handleAdd} />
+        <IconButton icon="add" onClick={handleAdd} />
       </Flex>
       <ChakraTable>
         <Thead>
@@ -30,6 +37,7 @@ const Table = ({ title, data, columns, handleAdd }) => {
             {columns.map((column, index) => {
               return <Th key={index}>{column}</Th>;
             })}
+            <Th width="100px" />
           </Tr>
         </Thead>
         <Tbody>
@@ -39,6 +47,12 @@ const Table = ({ title, data, columns, handleAdd }) => {
                 {columns.map((column, index) => {
                   return <Td key={index}>{row[column]}</Td>;
                 })}
+                <Td width="100px">
+                  <ActionButtons
+                    handleEdit={() => handleEdit(row)}
+                    handleRemove={() => handleRemove(row)}
+                  />
+                </Td>
               </Tr>
             );
           })}
@@ -49,3 +63,12 @@ const Table = ({ title, data, columns, handleAdd }) => {
 };
 
 export default Table;
+
+export const ActionButtons = ({ handleEdit, handleRemove }) => {
+  return (
+    <HStack>
+      <IconButton icon="edit" onClick={handleEdit} />
+      <IconButton icon="delete" onClick={handleRemove} />
+    </HStack>
+  );
+};

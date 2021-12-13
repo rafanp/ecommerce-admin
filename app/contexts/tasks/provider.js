@@ -11,6 +11,7 @@ import { useToast } from "@chakra-ui/react";
 import { v4 as uuidv4 } from "uuid";
 import { api } from "app/services/api";
 import { deleteTask, getAllTasks } from "app/services/fauna";
+import { getData } from "app/services/defaultService";
 
 const TaskContext = createContext();
 
@@ -34,19 +35,20 @@ export function TaskProvider({ children }) {
   // }, [todoList]);
 
   const refreshData = useCallback(async () => {
-    // const response = await api.get("/tasks");
-    const response = {
-      data: [
-        {
-          id: "1",
-          name: "suit",
-        },
-        {
-          id: "2",
-          name: "dress",
-        },
-      ],
-    };
+    // const response = await api.get("/categories");
+    const response = await getData("categories");
+    // const response = {
+    //   data: [
+    //     {
+    //       id: "1",
+    //       name: "suit",
+    //     },
+    //     {
+    //       id: "2",
+    //       name: "dress",
+    //     },
+    //   ],
+    // };
     setTodoList(response.data);
   }, []);
 

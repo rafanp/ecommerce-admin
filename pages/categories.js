@@ -12,9 +12,9 @@ import { useCallback, useEffect } from "react";
 import Table from "@/components/templates/Tables/tables";
 import { MODAL_TYPES, useGlobalModal } from "app/contexts/globalModal/provider";
 
-const Tasks = (props) => {
+const Categories = (props) => {
   const { todoList, setTodoList, refreshData } = useTasks();
-  const { handleOpenCreateModal, showModal } = useGlobalModal();
+  const { handleOpenCreateModal, showModal, setForm } = useGlobalModal();
 
   const loadAllTasks = useCallback(async () => {
     if (!todoList.length) {
@@ -30,7 +30,7 @@ const Tasks = (props) => {
   const createModal = () => {
     console.log("MODAL_TYPES.CREATE_MODAL :", MODAL_TYPES.CREATE_MODAL);
     showModal(MODAL_TYPES.CREATE_MODAL, {
-      title: "Categories",
+      title: "Create category",
       inputs: ["name"],
       confirmBtn: "Save",
       service: "categories",
@@ -41,6 +41,28 @@ const Tasks = (props) => {
     // showModal(MODAL_TYPES.DELETE_MODAL);
   };
 
+  const handleEdit = (form) => {
+    console.log("handle edit form :", form);
+    showModal(
+      MODAL_TYPES.CREATE_MODAL,
+      {
+        title: "Edit category",
+        inputs: ["name"],
+        confirmBtn: "Save",
+        service: "categories",
+      },
+      form
+    );
+  };
+
+  const handleRemove = (form) => {
+    showModal(MODAL_TYPES.DELETE_MODAL, {
+      title: "Delete",
+      description: "Are you sure you want delete this category?",
+    });
+    setForm(form);
+  };
+
   const updateModal = () => {
     // showModal(MODAL_TYPES.UPDATE_MODAL);
   };
@@ -48,7 +70,6 @@ const Tasks = (props) => {
   const handleAdd = () => {
     // handleOpenCreateModal();
     createModal();
-    console.log("handleAdd :");
   };
 
   return (
@@ -61,6 +82,8 @@ const Tasks = (props) => {
           columns={["id", "name"]}
           data={todoList}
           handleAdd={handleAdd}
+          handleEdit={handleEdit}
+          handleRemove={handleRemove}
         />
       </GridItem>
     </Grid>
@@ -80,7 +103,7 @@ const Tasks = (props) => {
 //   }
 // };
 
-export default Tasks;
+export default Categories;
 
 // export const getServerSideProps = async () => {
 //   return {

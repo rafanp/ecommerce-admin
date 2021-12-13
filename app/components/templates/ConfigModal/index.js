@@ -12,6 +12,12 @@ import {
 } from "@chakra-ui/react";
 import Input from "@/components/ui/Input/Input";
 
+import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+} from "@chakra-ui/form-control";
+
 const ConfigModal = ({ title, inputs }) => {
   const {
     openCreateModal,
@@ -55,7 +61,7 @@ const Content = ({ inputs }) => {
   const { handleInputs, store } = useGlobalModal();
   const { form } = store;
   console.log("form :", form);
-
+  // Change to Formik
   return (
     <ModalBody>
       <Stack>
@@ -78,8 +84,8 @@ const Content = ({ inputs }) => {
 
 const FormInput = ({ text, ...rest }) => {
   return (
-    <Box>
-      <Text textTransform="capitalize">{text}</Text>
+    <FormControl>
+      <FormLabel textTransform="capitalize">{text}</FormLabel>
       <Input
         placeholder={"Add new item"}
         bg={"white"}
@@ -87,6 +93,7 @@ const FormInput = ({ text, ...rest }) => {
         borderRadius={8}
         {...rest}
       />
-    </Box>
+      {/* <FormErrorMessage>{}</FormErrorMessage> */}
+    </FormControl>
   );
 };

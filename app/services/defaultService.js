@@ -6,3 +6,22 @@ export const createDatabase = async (service, data) => {
   console.log("response :", response);
   return response;
 };
+
+export const updateData = async (service, data) => {
+  const response = await api.put(`/${service}`, { ...data });
+  console.log("response :", response);
+  return response;
+};
+
+export const deleteData = async (service, data) => {
+  console.log("service :", service);
+  // const response = await api.delete(`/${service}`,);
+  console.log("response :", response);
+  return response;
+};
+
+export const getData = async (service) => {
+  const response = await api.get(`/${service}`);
+  console.log("response :", response);
+  return response;
+};

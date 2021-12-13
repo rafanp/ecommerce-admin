@@ -10,17 +10,22 @@ import { useToast } from "@chakra-ui/react";
 import ConfigModal from "@/components/templates/ConfigModal";
 import { api } from "app/services/api";
 import { v4 as uuidv4 } from "uuid";
-import { createDatabase } from "app/services/defaultService";
+import {
+  createDatabase,
+  deleteData,
+  updateData,
+} from "app/services/defaultService";
+import DeleteModal from "@/components/templates/RemoveModal";
 
 export const MODAL_TYPES = {
   CREATE_MODAL: "CREATE_MODAL",
-  //  DELETE_MODAL: “DELETE_MODAL”,
+  DELETE_MODAL: "DELETE_MODAL",
   //  UPDATE_MODAL: “UPDATE_MODAL”
 };
 
 const MODAL_COMPONENTS = {
   [MODAL_TYPES.CREATE_MODAL]: ConfigModal,
-  //  [MODAL_TYPES.DELETE_MODAL]: DeleteModal,
+  [MODAL_TYPES.DELETE_MODAL]: DeleteModal,
   //  [MODAL_TYPES.UPDATE_MODAL]: UpdateModal
 };
 
@@ -56,14 +61,14 @@ export function GlobalModalProvider({ children }) {
 
   const { modalType, modalProps } = store || {};
 
-  const showModal = (modalType, modalProps) => {
-    // console.log("modalProps :", modalProps);
-    // console.log("modalType :", modalType);
+  const showModal = (modalType, modalProps, form = {}) => {
+    console.log("modalProps :", modalProps);
+    console.log("modalType :", modalType);
     setStore({
       ...store,
       modalType,
       modalProps,
-      form: {},
+      form,
     });
   };
 
@@ -96,14 +101,56 @@ export function GlobalModalProvider({ children }) {
   };
 
   const handleConfirm = async () => {
+    const { form, modalType } = store;
+
+    console.log("modalType :", modalType);
+
+    const response = await confirmActions(modalType);
+    console.log("response :", response);
+  };
+
+  const deleteConfirm = async () => {
+    // const { form } = store;
+    console.log("form :", form);
+    // console.log("delete modal called");
+    return await deleteData(modalProps.service, form.id);
+  };
+
+  const createConfirm = async () => {
     const { form } = store;
-    if (form.id) {
-      const response = await updateData(modalProps.service, form);
-    } else {
-      const response = await createDatabase(modalProps.service, form);
-      console.log("response :", response);
+    try {
+      let response = {};
+      if (form.id) {
+        response = await updateData(modalProps.service, form);
+      } else {
+        response = await createDatabase(modalProps.service, form);
+      }
+
+      hideModal();
+
+      return response;
+    } catch {
+      toast({
+        description: "Error while creating data.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
+
+  const confirmActions = (type) => {
+    switch (type) {
+      case MODAL_TYPES.CREATE_MODAL:
+        return createConfirm();
+      case MODAL_TYPES.DELETE_MODAL:
+        return deleteConfirm();
+    }
+  };
+  // const confirmActions = {
+  //   CREATE_MODAL: createConfirm(),
+  //   DELETE_MODAL: deleteConfirm(),
+  // };
 
   const renderComponent = () => {
     const ModalComponent = MODAL_COMPONENTS[modalType];
