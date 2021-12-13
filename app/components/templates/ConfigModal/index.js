@@ -31,10 +31,6 @@ const ConfigModal = ({ title, inputs }) => {
 
   // const [form, setForm] = useState({});
 
-  const handleModalToggle = () => {
-    hideModal();
-  };
-
   return (
     <Modal isOpen onClose={hideModal}>
       <ModalOverlay />
@@ -58,8 +54,7 @@ const ConfigModal = ({ title, inputs }) => {
 export default ConfigModal;
 
 const Content = ({ inputs }) => {
-  const { handleInputs, store } = useGlobalModal();
-  const { form } = store;
+  const { handleInputs, store, form } = useGlobalModal();
   console.log("form :", form);
   // Change to Formik
   return (

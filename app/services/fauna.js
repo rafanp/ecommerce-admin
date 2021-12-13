@@ -25,8 +25,10 @@ export const deleteData = async (index, id) => {
   return response;
 };
 
-export const updateData = async ({ id, data }) => {
-  const response = fauna.query(q.Update(selectIndexById(id), { data }));
+export const updateData = async (index, data) => {
+  const response = fauna.query(
+    q.Update(selectIndexById(index, data.id), { data })
+  );
 
   return response;
 };

@@ -24,11 +24,9 @@ const Categories = (props) => {
 
   useEffect(() => {
     loadAllTasks();
-    // setTodoList(props.tasks);
   }, [loadAllTasks]);
 
   const createModal = () => {
-    console.log("MODAL_TYPES.CREATE_MODAL :", MODAL_TYPES.CREATE_MODAL);
     showModal(MODAL_TYPES.CREATE_MODAL, {
       title: "Create category",
       inputs: ["name"],
@@ -37,22 +35,15 @@ const Categories = (props) => {
     });
   };
 
-  const deleteModal = () => {
-    // showModal(MODAL_TYPES.DELETE_MODAL);
-  };
-
   const handleEdit = (form) => {
-    console.log("handle edit form :", form);
-    showModal(
-      MODAL_TYPES.CREATE_MODAL,
-      {
-        title: "Edit category",
-        inputs: ["name"],
-        confirmBtn: "Save",
-        service: "categories",
-      },
-      form
-    );
+    setForm(form);
+
+    showModal(MODAL_TYPES.CREATE_MODAL, {
+      title: "Edit category",
+      inputs: ["name"],
+      confirmBtn: "Save",
+      service: "categories",
+    });
   };
 
   const handleRemove = (form) => {

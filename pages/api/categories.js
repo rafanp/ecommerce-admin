@@ -29,7 +29,7 @@ const Categories = async (req, res) => {
   }
 
   if (req.method == "PUT") {
-    const query = await updateData(req.body);
+    const query = await updateData(indexes.getById, req.body);
     res.status(200).json(query);
   }
 };

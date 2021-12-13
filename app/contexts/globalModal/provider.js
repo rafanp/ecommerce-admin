@@ -8,8 +8,6 @@ import {
 } from "react";
 import { useToast } from "@chakra-ui/react";
 import ConfigModal from "@/components/templates/ConfigModal";
-import { api } from "app/services/api";
-import { v4 as uuidv4 } from "uuid";
 import {
   createDatabase,
   deleteData,
@@ -29,17 +27,7 @@ const MODAL_COMPONENTS = {
   //  [MODAL_TYPES.UPDATE_MODAL]: UpdateModal
 };
 
-type GlobalModalContext = {
-  showModal: (modalType: string, modalProps?: any) => void;
-  hideModal: () => void;
-  store: any;
-  openCreateModal: boolean;
-  setOpenCreateModal: () => void;
-  handleOpenCreateModal: () => void;
-  handleCloseCreateModal: () => void;
-};
-
-const initalState: GlobalModalContext = {
+const initalState = {
   showModal: () => {},
   hideModal: () => {},
   store: {},
@@ -61,14 +49,11 @@ export function GlobalModalProvider({ children }) {
 
   const { modalType, modalProps } = store || {};
 
-  const showModal = (modalType, modalProps, form = {}) => {
-    console.log("modalProps :", modalProps);
-    console.log("modalType :", modalType);
+  const showModal = (modalType, modalProps) => {
     setStore({
       ...store,
       modalType,
       modalProps,
-      form,
     });
   };
 
@@ -77,47 +62,30 @@ export function GlobalModalProvider({ children }) {
       ...store,
       modalType: null,
       modalProps: {},
-      form: {},
     });
+    setForm({});
   };
 
-  const handleInputs = (field: string, value: string) => {
-    setStore({
-      ...store,
-      form: {
-        ...store.form,
-        [field]: value,
-      },
+  const handleInputs = (field, value) => {
+    setForm({
+      ...form,
+      [field]: value,
     });
-  };
-
-  const handleOpenCreateModal = () => {
-    console.log("handleOpenCreateModal :");
-    setOpenCreateModal(true);
-  };
-
-  const handleCloseCreateModal = () => {
-    setOpenCreateModal(false);
   };
 
   const handleConfirm = async () => {
     const { form, modalType } = store;
 
-    console.log("modalType :", modalType);
-
-    const response = await confirmActions(modalType);
-    console.log("response :", response);
+    return await confirmActionButton(modalType);
   };
 
   const deleteConfirm = async () => {
-    // const { form } = store;
-    console.log("form :", form);
-    // console.log("delete modal called");
-    return await deleteData(modalProps.service, form.id);
+    const response = await deleteData(modalProps.service, form.id);
+    // hideModal();
+    return response;
   };
 
   const createConfirm = async () => {
-    const { form } = store;
     try {
       let response = {};
       if (form.id) {
@@ -125,9 +93,7 @@ export function GlobalModalProvider({ children }) {
       } else {
         response = await createDatabase(modalProps.service, form);
       }
-
       hideModal();
-
       return response;
     } catch {
       toast({
@@ -139,7 +105,7 @@ export function GlobalModalProvider({ children }) {
     }
   };
 
-  const confirmActions = (type) => {
+  const confirmActionButton = (type) => {
     switch (type) {
       case MODAL_TYPES.CREATE_MODAL:
         return createConfirm();
@@ -147,17 +113,12 @@ export function GlobalModalProvider({ children }) {
         return deleteConfirm();
     }
   };
-  // const confirmActions = {
-  //   CREATE_MODAL: createConfirm(),
-  //   DELETE_MODAL: deleteConfirm(),
-  // };
 
   const renderComponent = () => {
     const ModalComponent = MODAL_COMPONENTS[modalType];
     if (!modalType || !ModalComponent) {
       return null;
     }
-    // return <ConfigModal />;
     return <ModalComponent id="global-modal" {...modalProps} />;
   };
 
@@ -169,8 +130,6 @@ export function GlobalModalProvider({ children }) {
         hideModal,
         store,
         setOpenCreateModal,
-        handleOpenCreateModal,
-        handleCloseCreateModal,
         setForm,
         handleInputs,
         form,
