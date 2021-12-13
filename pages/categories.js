@@ -59,6 +59,7 @@ const Categories = (props) => {
     showModal(MODAL_TYPES.DELETE_MODAL, {
       title: "Delete",
       description: "Are you sure you want delete this category?",
+      service: "categories",
     });
     setForm(form);
   };
