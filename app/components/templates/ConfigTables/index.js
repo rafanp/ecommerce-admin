@@ -1,20 +1,17 @@
 import { TaskProvider, useTasks } from 'app/contexts/tasks/provider';
 
 import { useCallback, useEffect } from 'react';
-import Table from '@/components/templates/Tables/tables';
+import Table from '@/components/common/Tables/tables';
 import { MODAL_TYPES, useGlobalModal } from 'app/contexts/globalModal/provider';
 
 const ConfigTables = ({ table, modalConfig, serviceName, contextRef }) => {
-  console.log('contextRef :', contextRef);
-  const qwe = useTasks();
-
-  const { todoList, refreshData } = contextRef;
+  const { todoList, refreshData, loading } = contextRef;
 
   const { showModal, setForm } = useGlobalModal();
 
   const loadData = useCallback(async () => {
     if (!todoList.length) {
-      await refreshData();
+      await refreshData(serviceName);
     }
   }, []);
 
@@ -34,7 +31,7 @@ const ConfigTables = ({ table, modalConfig, serviceName, contextRef }) => {
   const handleEdit = (form) => {
     setForm(form);
 
-    showModal(MODAL_TYPES.CREATE_MODAL, {
+    showModal(MODAL_TYPES.CREAtTE_MODAL, {
       title: modalConfig.editTitle || 'Edit',
       inputs: ['name'],
       //   confirmBtn: 'Save',
@@ -56,6 +53,7 @@ const ConfigTables = ({ table, modalConfig, serviceName, contextRef }) => {
       title={table.title}
       columns={table.columns}
       data={todoList}
+      loading={loading}
       handleAdd={handleAdd}
       handleEdit={handleEdit}
       handleRemove={handleRemove}

@@ -24,6 +24,7 @@ const Table = ({
   handleAdd,
   handleEdit,
   handleRemove,
+  loading,
 }) => {
   return (
     <Stack spacing={6}>
@@ -32,7 +33,7 @@ const Table = ({
         <Spacer />
         <IconButton icon="add" onClick={handleAdd} />
       </Flex>
-      <Skeleton isLoaded={data.length}>
+      <Skeleton isLoaded={!loading}>
         <ChakraTable>
           <Thead>
             <Tr>
@@ -60,6 +61,9 @@ const Table = ({
             })}
           </Tbody>
         </ChakraTable>
+        {!data.length && (
+          <Text mt="8">{`We didn't find any data to show at this time.`}</Text>
+        )}
       </Skeleton>
     </Stack>
   );

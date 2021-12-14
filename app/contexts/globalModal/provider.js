@@ -5,19 +5,19 @@ import {
   useState,
   useEffect,
   useCallback,
-} from "react";
-import { useToast } from "@chakra-ui/react";
-import ConfigModal from "@/components/templates/ConfigModal";
+} from 'react';
+import { useToast } from '@chakra-ui/react';
+import ConfigModal from '@/components/templates/ConfigModal';
 import {
   createDatabase,
   deleteData,
   updateData,
-} from "app/services/defaultService";
-import DeleteModal from "@/components/templates/RemoveModal";
+} from 'app/services/defaultService';
+import DeleteModal from '@/components/common/RemoveModal';
 
 export const MODAL_TYPES = {
-  CREATE_MODAL: "CREATE_MODAL",
-  DELETE_MODAL: "DELETE_MODAL",
+  CREATE_MODAL: 'CREATE_MODAL',
+  DELETE_MODAL: 'DELETE_MODAL',
   //  UPDATE_MODAL: “UPDATE_MODAL”
 };
 
@@ -97,8 +97,8 @@ export function GlobalModalProvider({ children }) {
       return response;
     } catch {
       toast({
-        description: "Error while creating data.",
-        status: "error",
+        description: 'Error while creating data.',
+        status: 'error',
         duration: 3000,
         isClosable: true,
       });

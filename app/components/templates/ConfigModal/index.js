@@ -1,5 +1,5 @@
-import { Box, Flex, Spacer, Stack, Text } from "@chakra-ui/layout";
-import { useGlobalModal } from "app/contexts/globalModal/provider";
+import { Box, Flex, Spacer, Stack, Text } from '@chakra-ui/layout';
+import { useGlobalModal } from 'app/contexts/globalModal/provider';
 import {
   Modal,
   ModalOverlay,
@@ -9,14 +9,14 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
-} from "@chakra-ui/react";
-import Input from "@/components/ui/Input/Input";
+} from '@chakra-ui/react';
+import Input from '@/components/ui/Input/Input';
 
 import {
   FormControl,
   FormLabel,
   FormErrorMessage,
-} from "@chakra-ui/form-control";
+} from '@chakra-ui/form-control';
 
 const ConfigModal = ({ title, inputs }) => {
   const {
@@ -55,7 +55,7 @@ export default ConfigModal;
 
 const Content = ({ inputs }) => {
   const { handleInputs, store, form } = useGlobalModal();
-  console.log("form :", form);
+  console.log('form :', form);
   // Change to Formik
   return (
     <ModalBody>
@@ -82,8 +82,8 @@ const FormInput = ({ text, ...rest }) => {
     <FormControl>
       <FormLabel textTransform="capitalize">{text}</FormLabel>
       <Input
-        placeholder={"Add new item"}
-        bg={"white"}
+        // placeholder={"Add new item"}
+        bg={'white'}
         mr={4}
         borderRadius={8}
         {...rest}
