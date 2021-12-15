@@ -22,7 +22,7 @@ const ConfigTables = ({ table, modalConfig, serviceName, contextRef }) => {
   const handleAdd = () => {
     showModal(MODAL_TYPES.CREATE_MODAL, {
       title: modalConfig.createTitle || 'Create',
-      inputs: modalConfig.inputs,
+      fields: modalConfig.fields,
       service: serviceName,
     });
   };
@@ -32,7 +32,7 @@ const ConfigTables = ({ table, modalConfig, serviceName, contextRef }) => {
 
     showModal(MODAL_TYPES.CREAtTE_MODAL, {
       title: modalConfig.editTitle || 'Edit',
-      inputs: ['name'],
+      fields: ['name'],
       //   confirmBtn: 'Save',
       service: serviceName,
     });

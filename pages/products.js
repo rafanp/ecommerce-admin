@@ -13,7 +13,17 @@ const modalConfig = {
   createTitle: 'Create product',
   editTitle: 'Edit product',
   deleteTitle: 'Delete product',
-  inputs: ['name', 'description', 'quantity', 'price'],
+  // fields: ['name', 'description', 'quantity', 'price'],
+  fields: [
+    {
+      title: 'name',
+      // type: 'select'
+    },
+    {
+      title: 'category',
+      type: 'select',
+    },
+  ],
 };
 
 const serviceName = 'products';

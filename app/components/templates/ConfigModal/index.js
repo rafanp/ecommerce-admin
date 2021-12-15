@@ -18,7 +18,7 @@ import {
   FormErrorMessage,
 } from '@chakra-ui/form-control';
 
-const ConfigModal = ({ title, inputs }) => {
+const ConfigModal = ({ title, fields }) => {
   const {
     openCreateModal,
     handleCloseCreateModal,
@@ -37,7 +37,7 @@ const ConfigModal = ({ title, inputs }) => {
       <ModalContent>
         <ModalHeader>{title}</ModalHeader>
         <ModalCloseButton />
-        <Content inputs={inputs} />
+        <Form fields={fields} />
         <ModalFooter>
           <Button variant="ghost" mr={3} onClick={handleCloseCreateModal}>
             Close
@@ -53,22 +53,23 @@ const ConfigModal = ({ title, inputs }) => {
 
 export default ConfigModal;
 
-const Content = ({ inputs }) => {
-  const { handleInputs, store, form } = useGlobalModal();
+const Form = ({ fields }) => {
+  const { handlefields, store, form } = useGlobalModal();
   console.log('form :', form);
   // Change to Formik
   return (
     <ModalBody>
       <Stack>
-        {inputs.map((field, index) => {
+        {fields.map((field, index) => {
           return (
             <FormInput
               key={index}
-              text={field}
+              title={field.title}
+              type={field.type}
               onChange={(e) => {
-                handleInputs(field, e.target.value);
+                handleInputs(field.title, e.target.value);
               }}
-              value={form[field]}
+              value={form[field.title]}
             />
           );
         })}
@@ -77,13 +78,15 @@ const Content = ({ inputs }) => {
   );
 };
 
-const FormInput = ({ text, ...rest }) => {
+const FormInput = ({ title, type, ...rest }) => {
   return (
     <FormControl>
-      <FormLabel textTransform="capitalize">{text}</FormLabel>
+      <FormLabel textTransform="capitalize">{title}</FormLabel>
       <Input
         // placeholder={"Add new item"}
         bg={'white'}
+        type={type}
+        domain={'category'}
         mr={4}
         borderRadius={8}
         {...rest}
