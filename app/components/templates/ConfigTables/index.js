@@ -5,12 +5,12 @@ import Table from '@/components/common/Tables/tables';
 import { MODAL_TYPES, useGlobalModal } from 'app/contexts/globalModal/provider';
 
 const ConfigTables = ({ table, modalConfig, serviceName, contextRef }) => {
-  const { todoList, refreshData, loading } = contextRef;
+  const { data, refreshData, loading } = contextRef;
 
   const { showModal, setForm } = useGlobalModal();
 
   const loadData = useCallback(async () => {
-    if (!todoList.length) {
+    if (!data.length) {
       await refreshData(serviceName);
     }
   }, []);
@@ -23,7 +23,6 @@ const ConfigTables = ({ table, modalConfig, serviceName, contextRef }) => {
     showModal(MODAL_TYPES.CREATE_MODAL, {
       title: modalConfig.createTitle || 'Create',
       inputs: modalConfig.inputs,
-      //   confirmBtn: 'Save',
       service: serviceName,
     });
   };
@@ -52,7 +51,7 @@ const ConfigTables = ({ table, modalConfig, serviceName, contextRef }) => {
     <Table
       title={table.title}
       columns={table.columns}
-      data={todoList}
+      data={data}
       loading={loading}
       handleAdd={handleAdd}
       handleEdit={handleEdit}

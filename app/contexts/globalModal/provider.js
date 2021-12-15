@@ -81,7 +81,7 @@ export function GlobalModalProvider({ children }) {
 
   const deleteConfirm = async () => {
     const response = await deleteData(modalProps.service, form.id);
-    // hideModal();
+    hideModal();
     return response;
   };
 
