@@ -9,7 +9,6 @@ import { Icon } from '@chakra-ui/icon';
 import Select from './Select';
 
 const Input = ({ placeholder, type, domain, icon, ...rest }) => {
-  console.log('type :', type);
   return (
     <InputGroup>
       {icon && (

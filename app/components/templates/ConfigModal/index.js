@@ -26,10 +26,9 @@ const ConfigModal = ({ title, fields }) => {
     store,
     form,
     setForm,
+    handleInputs,
     handleConfirm,
   } = useGlobalModal();
-
-  // const [form, setForm] = useState({});
 
   return (
     <Modal isOpen onClose={hideModal}>
@@ -54,25 +53,30 @@ const ConfigModal = ({ title, fields }) => {
 export default ConfigModal;
 
 const Form = ({ fields }) => {
-  const { handlefields, store, form } = useGlobalModal();
+  const { handlefields, store, form, handleInputs } = useGlobalModal();
   console.log('form :', form);
   // Change to Formik
+  const handleChange = (field, type, e) => {
+    const value = type === 'select' ? e : e.target?.value;
+    handleInputs(field, value);
+  };
+
   return (
     <ModalBody>
       <Stack>
-        {fields.map((field, index) => {
-          return (
-            <FormInput
-              key={index}
-              title={field.title}
-              type={field.type}
-              onChange={(e) => {
-                handleInputs(field.title, e.target.value);
-              }}
-              value={form[field.title]}
-            />
-          );
-        })}
+        {fields &&
+          fields.map((field, index) => {
+            const { title, type } = field;
+            return (
+              <FormInput
+                key={index}
+                title={title}
+                type={type}
+                onChange={(e) => handleChange(title, type, e)}
+                value={form[title]}
+              />
+            );
+          })}
       </Stack>
     </ModalBody>
   );
@@ -84,10 +88,10 @@ const FormInput = ({ title, type, ...rest }) => {
       <FormLabel textTransform="capitalize">{title}</FormLabel>
       <Input
         // placeholder={"Add new item"}
+        name={title}
         bg={'white'}
         type={type}
         domain={'category'}
-        mr={4}
         borderRadius={8}
         {...rest}
       />

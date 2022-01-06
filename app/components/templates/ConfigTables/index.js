@@ -30,10 +30,9 @@ const ConfigTables = ({ table, modalConfig, serviceName, contextRef }) => {
   const handleEdit = (form) => {
     setForm(form);
 
-    showModal(MODAL_TYPES.CREAtTE_MODAL, {
+    showModal(MODAL_TYPES.CREATE_MODAL, {
       title: modalConfig.editTitle || 'Edit',
-      fields: ['name'],
-      //   confirmBtn: 'Save',
+      fields: modalConfig.fields,
       service: serviceName,
     });
   };

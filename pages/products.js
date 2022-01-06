@@ -17,7 +17,15 @@ const modalConfig = {
   fields: [
     {
       title: 'name',
-      // type: 'select'
+    },
+    {
+      title: 'description',
+    },
+    {
+      title: 'quantity',
+    },
+    {
+      title: 'price',
     },
     {
       title: 'category',

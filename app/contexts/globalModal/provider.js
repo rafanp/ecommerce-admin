@@ -67,10 +67,12 @@ export function GlobalModalProvider({ children }) {
   };
 
   const handleInputs = (field, value) => {
+    // console.log('field, value :', field, value);
     setForm({
       ...form,
       [field]: value,
     });
+    // console.log('form', form);
   };
 
   const handleConfirm = async () => {
