@@ -19,16 +19,7 @@ import {
 } from '@chakra-ui/form-control';
 
 const ConfigModal = ({ title, fields }) => {
-  const {
-    openCreateModal,
-    handleCloseCreateModal,
-    hideModal,
-    store,
-    form,
-    setForm,
-    handleInputs,
-    handleConfirm,
-  } = useGlobalModal();
+  const { handleCloseCreateModal, hideModal, handleConfirm } = useGlobalModal();
 
   return (
     <Modal isOpen onClose={hideModal}>
@@ -53,8 +44,7 @@ const ConfigModal = ({ title, fields }) => {
 export default ConfigModal;
 
 const Form = ({ fields }) => {
-  const { handlefields, store, form, handleInputs } = useGlobalModal();
-  console.log('form :', form);
+  const { form, handleInputs } = useGlobalModal();
   // Change to Formik
   const handleChange = (field, type, e) => {
     const value = type === 'select' ? e : e.target?.value;
@@ -87,7 +77,6 @@ const FormInput = ({ title, type, ...rest }) => {
     <FormControl>
       <FormLabel textTransform="capitalize">{title}</FormLabel>
       <Input
-        // placeholder={"Add new item"}
         name={title}
         bg={'white'}
         type={type}

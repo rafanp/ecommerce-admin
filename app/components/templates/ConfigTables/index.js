@@ -24,6 +24,7 @@ const ConfigTables = ({ table, modalConfig, serviceName, contextRef }) => {
       title: modalConfig.createTitle || 'Create',
       fields: modalConfig.fields,
       service: serviceName,
+      contextRef,
     });
   };
 
@@ -34,16 +35,19 @@ const ConfigTables = ({ table, modalConfig, serviceName, contextRef }) => {
       title: modalConfig.editTitle || 'Edit',
       fields: modalConfig.fields,
       service: serviceName,
+      contextRef,
     });
   };
 
   const handleRemove = (form) => {
+    setForm(form);
+
     showModal(MODAL_TYPES.DELETE_MODAL, {
       title: modalConfig.deleteTitle,
       description: 'Are you sure you want delete this item?',
       service: serviceName,
+      contextRef,
     });
-    setForm(form);
   };
 
   return (

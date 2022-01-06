@@ -76,9 +76,13 @@ export function GlobalModalProvider({ children }) {
   };
 
   const handleConfirm = async () => {
-    const { form, modalType } = store;
+    const { form, modalType, modalProps } = store;
+    const { contextRef, service } = modalProps;
 
-    return await confirmActionButton(modalType);
+    const response = await confirmActionButton(modalType);
+    contextRef.refreshData(service);
+
+    return response;
   };
 
   const deleteConfirm = async () => {
