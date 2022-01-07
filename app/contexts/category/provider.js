@@ -1,9 +1,9 @@
 import { useContext, createContext, useState, useCallback } from 'react';
 import { getData } from 'app/services/defaultService';
 
-const TaskContext = createContext();
+const CategoryContext = createContext();
 
-export function TaskProvider({ children }) {
+export function CategoryProvider({ children }) {
   const [data, setData] = useState([]);
 
   const [loading, setLoading] = useState(false);
@@ -16,7 +16,7 @@ export function TaskProvider({ children }) {
   }, []);
 
   return (
-    <TaskContext.Provider
+    <CategoryContext.Provider
       value={{
         data,
         setData,
@@ -25,12 +25,12 @@ export function TaskProvider({ children }) {
       }}
     >
       {children}
-    </TaskContext.Provider>
+    </CategoryContext.Provider>
   );
 }
 
-export function useTasks() {
-  const context = useContext(TaskContext);
+export function useCategory() {
+  const context = useContext(CategoryContext);
 
   return context;
 }

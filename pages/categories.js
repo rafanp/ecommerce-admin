@@ -1,5 +1,5 @@
 import { Grid, GridItem } from '@chakra-ui/layout';
-import { TaskProvider, useTasks } from 'app/contexts/tasks/provider';
+import { CategoryProvider, useCategory } from 'app/contexts/category/provider';
 
 import ConfigTables from '@/components/templates/ConfigTables';
 
@@ -29,7 +29,7 @@ const Categories = () => {
           table={table}
           modalConfig={modalConfig}
           serviceName={serviceName}
-          contextRef={useTasks()}
+          contextRef={useCategory()}
         />
       </GridItem>
     </Grid>

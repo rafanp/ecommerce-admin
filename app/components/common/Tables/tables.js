@@ -1,8 +1,5 @@
 import { Flex, HStack, Spacer, Stack, VStack } from '@chakra-ui/layout';
-// import { useTasks } from "app/contexts/tasks/provider";
 import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/skeleton';
-
-import TodoItem from '@/components/screens/tasks/toDos/todoItem';
 
 import {
   Table as ChakraTable,

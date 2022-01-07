@@ -1,5 +1,3 @@
-import { TaskProvider, useTasks } from 'app/contexts/tasks/provider';
-
 import { useCallback, useEffect } from 'react';
 import Table from '@/components/common/Tables/tables';
 import { MODAL_TYPES, useGlobalModal } from 'app/contexts/globalModal/provider';
