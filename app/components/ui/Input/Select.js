@@ -40,6 +40,7 @@ const Select = ({ domain, onChange, ...rest }) => {
       loadOptions={promiseOptions}
       styles={customStyles}
       isMulti
+      closeMenuOnSelect={false}
       getOptionLabel={(option) => option.name}
       getOptionValue={(option) => option.id}
       onChange={onChange}

@@ -1,7 +1,6 @@
 import Page from '@/components/layouts/Page';
 import { ChakraProvider } from '@chakra-ui/react';
-import { CounterProvider } from 'app/contexts/toDos/provider';
-import { CategoryProvider, useCategory } from 'app/contexts/category/provider';
+import { CategoryProvider } from 'app/contexts/category/provider';
 
 import { theme } from 'app/styles/theme';
 import { GlobalModalProvider } from 'app/contexts/globalModal/provider';

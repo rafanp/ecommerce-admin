@@ -6,14 +6,27 @@ import { ProductsProvider } from 'app/contexts/products/provider';
 
 const table = {
   title: 'Products',
-  columns: ['name', 'description', 'quantity', 'price'],
+  columns: [
+    {
+      title: 'picture',
+      type: 'img',
+    },
+    {
+      title: 'name',
+    },
+    {
+      title: 'quantity',
+    },
+    {
+      title: 'price',
+    },
+  ],
 };
 
 const modalConfig = {
   createTitle: 'Create product',
   editTitle: 'Edit product',
   deleteTitle: 'Delete product',
-  // fields: ['name', 'description', 'quantity', 'price'],
   fields: [
     {
       title: 'name',
@@ -30,6 +43,10 @@ const modalConfig = {
     {
       title: 'category',
       type: 'select',
+    },
+    {
+      title: 'picture',
+      type: 'img',
     },
   ],
 };

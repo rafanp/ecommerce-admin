@@ -1,11 +1,18 @@
 import { Grid, GridItem } from '@chakra-ui/layout';
-import { CategoryProvider, useCategory } from 'app/contexts/category/provider';
+import { useCategory } from 'app/contexts/category/provider';
 
 import ConfigTables from '@/components/templates/ConfigTables';
 
 const table = {
   title: 'Categories',
-  columns: ['id', 'name'],
+  columns: [
+    {
+      title: 'id',
+    },
+    {
+      title: 'name',
+    },
+  ],
 };
 
 const modalConfig = {

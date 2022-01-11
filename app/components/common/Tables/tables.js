@@ -1,17 +1,15 @@
-import { Flex, HStack, Spacer, Stack, VStack } from '@chakra-ui/layout';
-import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/skeleton';
+import { Flex, HStack, Spacer, Stack } from '@chakra-ui/layout';
+import { Skeleton } from '@chakra-ui/skeleton';
 
 import {
   Table as ChakraTable,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
 } from '@chakra-ui/table';
-import { Box, Text } from '@chakra-ui/react';
+import { Image, Text, Link } from '@chakra-ui/react';
 import IconButton from '@/components/ui/Buttons';
 
 const Table = ({
@@ -35,7 +33,7 @@ const Table = ({
           <Thead>
             <Tr>
               {columns.map((column, index) => {
-                return <Th key={index}>{column}</Th>;
+                return <Th key={index}>{column.title}</Th>;
               })}
               <Th width="100px" />
             </Tr>
@@ -45,7 +43,13 @@ const Table = ({
               return (
                 <Tr key={index}>
                   {columns.map((column, index) => {
-                    return <Td key={index}>{row[column]}</Td>;
+                    return (
+                      <TableItem
+                        key={index}
+                        text={row[column.title]}
+                        type={column.type}
+                      />
+                    );
                   })}
                   <Td width="100px">
                     <ActionButtons
@@ -67,6 +71,27 @@ const Table = ({
 };
 
 export default Table;
+
+export const TableItem = ({ text, type }) => {
+  if (type === 'img') {
+    return (
+      <Td>
+        <Link href={text} isExternal>
+          <Image
+            objectFit="cover"
+            w="60px"
+            h="90px"
+            src={text}
+            alt={text}
+            borderRadius="8px"
+            fallbackSrc={<Skeleton />}
+          />
+        </Link>
+      </Td>
+    );
+  }
+  return <Td>{text}</Td>;
+};
 
 export const ActionButtons = ({ handleEdit, handleRemove }) => {
   return (
